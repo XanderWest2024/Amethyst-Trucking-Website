@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amethyst Trucking VTC | The Gem of the Road</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        amethyst: {
+                            100: '#e9d5ff',
+                            400: '#c084fc',
+                            600: '#9333ea',
+                            800: '#6b21a8',
+                            900: '#3b0764',
+                            950: '#23033a',
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        display: ['Rajdhani', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "linear-gradient(to bottom, rgba(35, 3, 58, 0.85), rgba(17, 17, 17, 0.95)), url('https://images.unsplash.com/photo-1519003722824-194d4455a60c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')",
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #111; }
+        ::-webkit-scrollbar-thumb { background: #9333ea; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #c084fc; }
+        
+        .glass-panel {
+            background: rgba(59, 7, 100, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(192, 132, 252, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .neon-text {
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.5), 0 0 20px rgba(168, 85, 247, 0.3);
+        }
+
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .page-content { display: none; }
+        .page-content.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-[#111] text-gray-100 font-sans antialiased overflow-x-hidden flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-black/90 backdrop-blur-md border-b border-amethyst-900/30" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="showPage('home')">
+                    <div class="w-12 h-12 flex items-center justify-center">
+                        <img src="https://media.discordapp.net/attachments/1472977449078886450/1472978405090660473/AmethystTruckingNoBackground.png?ex=699926ca&is=6997d54a&hm=a5fd713bb89e544a4faad3730f8dca4befccc18b47b21cf23bde586e4fed0dd3&=&format=webp&quality=lossless" alt="Amethyst Logo" class="h-full w-auto object-contain drop-shadow-[0_0_8px_rgba(147,51,234,0.6)]">
+                    </div>
+                    <span class="font-display font-bold text-2xl tracking-wider text-white uppercase hidden sm:inline">AMETHYST <span class="text-amethyst-400">TRUCKING</span></span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <button onclick="showPage('home')" class="nav-link hover:text-amethyst-400 transition-colors px-3 py-2 font-medium text-white">Home</button>
+                        <button onclick="showPage('about')" class="nav-link hover:text-amethyst-400 transition-colors px-3 py-2 font-medium text-gray-300">About Us</button>
+                        <button onclick="showPage('join')" class="nav-link hover:text-amethyst-400 transition-colors px-3 py-2 font-medium text-gray-300">Join VTC</button>
+                        <a href="https://discord.gg/8gfKGMtAdF" target="_blank" class="bg-amethyst-600 hover:bg-amethyst-500 text-white px-5 py-2 rounded-full font-bold transition-all transform hover:scale-105 shadow-[0_0_15px_rgba(147,51,234,0.4)]">
+                            <i class="fab fa-discord mr-2"></i> Discord
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="-mr-2 flex md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white p-2">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-amethyst-950 border-t border-amethyst-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <button onclick="showPage('home')" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Home</button>
+                <button onclick="showPage('about')" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">About Us</button>
+                <button onclick="showPage('join')" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left">Join</button>
+                <a href="https://discord.gg/8gfKGMtAdF" target="_blank" class="text-amethyst-400 block px-3 py-2 font-bold uppercase"><i class="fab fa-discord mr-2"></i> Join Discord</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CONTENT PAGES -->
+    <div class="flex-grow">
+        
+        <!-- PAGE: HOME -->
+        <div id="home" class="page-content active">
+            <!-- Hero -->
+            <section class="relative h-screen flex items-center justify-center bg-hero-pattern bg-cover bg-center bg-fixed">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#111] via-transparent to-transparent"></div>
+                <div class="relative z-10 text-center px-4 max-w-5xl mx-auto">
+                    <div class="mb-6 inline-block animate-float">
+                        <img src="https://media.discordapp.net/attachments/1472977449078886450/1472978405090660473/AmethystTruckingNoBackground.png?ex=699926ca&is=6997d54a&hm=a5fd713bb89e544a4faad3730f8dca4befccc18b47b21cf23bde586e4fed0dd3&=&format=webp&quality=lossless" alt="Amethyst Logo Large" class="h-48 md:h-64 w-auto object-contain drop-shadow-[0_0_35px_rgba(147,51,234,0.9)]">
+                    </div>
+                    <h1 class="font-display text-5xl md:text-8xl font-black mb-4 tracking-tight neon-text uppercase">
+                        Dominate The <span class="text-transparent bg-clip-text bg-gradient-to-r from-amethyst-400 via-white to-amethyst-400">Road</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 mb-10 font-light max-w-3xl mx-auto">
+                        Professional TruckersMP VTC styling. Convoys, Community, and Crystal Clear Standards.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <button onclick="showPage('join')" class="group relative px-8 py-4 bg-amethyst-600 text-white font-bold rounded-sm overflow-hidden transition-all hover:shadow-[0_0_30px_rgba(147,51,234,0.6)]">
+                            <div class="absolute inset-0 w-0 bg-white transition-all duration-[250ms] ease-out group-hover:w-full opacity-10"></div>
+                            <span class="relative flex items-center uppercase tracking-widest">
+                                Apply Now <i class="fas fa-chevron-right ml-2 text-sm"></i>
+                            </span>
+                        </button>
+                        <button onclick="showPage('about')" class="px-8 py-4 border border-amethyst-400 text-amethyst-300 font-bold rounded-sm uppercase tracking-widest hover:bg-amethyst-400 hover:text-black transition-all">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats -->
+            <div class="bg-[#111] py-10 border-b border-amethyst-900/50">
+                <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div class="text-center p-6 glass-panel rounded-xl">
+                        <i class="fas fa-road text-3xl text-amethyst-400 mb-3"></i>
+                        <h3 class="text-4xl font-display font-bold text-white counter" data-target="9979">0</h3>
+                        <p class="text-sm text-gray-400 uppercase tracking-widest mt-1">Kilometers Driven</p>
+                    </div>
+                    <div class="text-center p-6 glass-panel rounded-xl">
+                        <i class="fas fa-users text-3xl text-amethyst-400 mb-3"></i>
+                        <h3 class="text-4xl font-display font-bold text-white counter" data-target="5">0</h3>
+                        <p class="text-sm text-gray-400 uppercase tracking-widest mt-1">Active Drivers</p>
+                    </div>
+                    <div class="text-center p-6 glass-panel rounded-xl">
+                        <i class="fas fa-truck text-3xl text-amethyst-400 mb-3"></i>
+                        <h3 class="text-4xl font-display font-bold text-white counter" data-target="3">0</h3>
+                        <p class="text-sm text-gray-400 uppercase tracking-widest mt-1">Convoys Hosted</p>
+                    </div>
+                    <div class="text-center p-6 glass-panel rounded-xl">
+                        <i class="fas fa-calendar-check text-3xl text-amethyst-400 mb-3"></i>
+                        <h3 class="text-4xl font-display font-bold text-white">Weekly</h3>
+                        <p class="text-sm text-gray-400 uppercase tracking-widest mt-1">Events</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: ABOUT -->
+        <div id="about" class="page-content pt-20">
+            <section class="py-24 bg-[#161616] relative overflow-hidden min-h-screen flex items-center">
+                <div class="absolute top-0 right-0 w-1/3 h-full bg-amethyst-900/10 skew-x-12 pointer-events-none"></div>
+                <div class="absolute bottom-0 left-0 w-64 h-64 bg-amethyst-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="text-center mb-16">
+                        <h1 class="text-5xl font-display font-bold text-white mb-4 uppercase">About <span class="text-amethyst-400">Us</span></h1>
+                        <div class="h-1 w-24 bg-amethyst-600 mx-auto"></div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-16 items-center">
+                        <div>
+                            <h2 class="text-amethyst-400 font-bold uppercase tracking-widest mb-2 text-sm">Our Story</h2>
+                            <h3 class="text-4xl md:text-5xl font-display font-bold text-white mb-6">More Than Just A Paintjob.</h3>
+                            <p class="text-gray-400 leading-relaxed mb-6">
+                                Established in 2026, Amethyst Trucking was founded on the principles of respect, realism, and camaraderie. We aren't just driving trucks in a simulator; we are building a community of enthusiasts who love the open road.
+                            </p>
+                            <p class="text-gray-400 leading-relaxed mb-8">
+                                Whether you haul heavy cargo in ATS or cruise the autobahns in ETS2, there is a spot in our convoy for you. We host weekly public convoys on TruckersMP and maintain a standard of excellence.
+                            </p>
+                            
+                            <ul class="space-y-4">
+                                <li class="flex items-center text-gray-300">
+                                    <i class="fas fa-check-circle text-amethyst-500 mr-3"></i> Professional Driver Rankings
+                                </li>
+                                <li class="flex items-center text-gray-300">
+                                    <i class="fas fa-check-circle text-amethyst-500 mr-3"></i> Custom VTC Skins & Mods
+                                </li>
+                                <li class="flex items-center text-gray-300">
+                                    <i class="fas fa-check-circle text-amethyst-500 mr-3"></i> Active Discord Community
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="relative">
+                            <div class="absolute -inset-4 bg-gradient-to-r from-amethyst-600 to-purple-600 rounded-lg opacity-30 blur-lg"></div>
+                            <img src="https://media.discordapp.net/attachments/1472977449078886450/1472978405090660473/AmethystTruckingNoBackground.png?ex=699926ca&is=6997d54a&hm=a5fd713bb89e544a4faad3730f8dca4befccc18b47b21cf23bde586e4fed0dd3&=&format=webp&quality=lossless" alt="Professional Truck" class="relative rounded-lg shadow-2xl border border-gray-800 transition-all duration-500 hover:scale-[1.02]">
+                            <div class="absolute -bottom-6 -right-6 bg-black border border-amethyst-500 p-6 rounded-lg shadow-xl">
+                                <p class="text-amethyst-400 font-bold text-xl font-display uppercase">EST.</p>
+                                <p class="text-white text-3xl font-bold font-display">2026</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PAGE: JOIN -->
+        <div id="join" class="page-content pt-20">
+            <section class="py-24 relative bg-amethyst-950 min-h-screen flex items-center">
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
+                
+                <div class="max-w-4xl mx-auto px-4 relative z-10 w-full">
+                    <div class="glass-panel p-8 md:p-12 rounded-2xl text-center border-t-4 border-amethyst-500">
+                        <i class="fas fa-file-signature text-5xl text-amethyst-400 mb-6"></i>
+                        <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-6 uppercase">Ready To Join The Ranks?</h2>
+                        <p class="text-gray-300 mb-8 max-w-2xl mx-auto">
+                            We are looking for dedicated drivers who respect the simulation and the community. Please ensure you meet the requirements below before submitting an application on TruckersMP.
+                        </p>
+
+                        <div class="grid md:grid-cols-2 gap-4 text-left mb-10">
+                            <div class="flex items-start p-4 bg-black/40 rounded-lg">
+                                <i class="fas fa-exclamation-triangle text-amethyst-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="text-white font-bold">Age Requirement</h4>
+                                    <p class="text-gray-400 text-sm">Must be 16+ years of age.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-4 bg-black/40 rounded-lg">
+                                <i class="fas fa-gamepad text-amethyst-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="text-white font-bold">Game Ownership</h4>
+                                    <p class="text-gray-400 text-sm">Own a legal copy of ETS2 or ATS.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-4 bg-black/40 rounded-lg">
+                                <i class="fas fa-microphone text-amethyst-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="text-white font-bold">Discord</h4>
+                                    <p class="text-gray-400 text-sm">Mandatory for communication during events.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-4 bg-black/40 rounded-lg">
+                                <i class="fas fa-gavel text-amethyst-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="text-white font-bold">Clean Record</h4>
+                                    <p class="text-gray-400 text-sm">No recent history of disruptive behavior.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="https://truckersmp.com/vtc/86948" target="_blank" class="inline-block bg-amethyst-600 hover:bg-amethyst-500 text-white font-bold py-4 px-10 rounded shadow-[0_0_20px_rgba(147,51,234,0.4)] hover:shadow-[0_0_30px_rgba(147,51,234,0.6)] transition-all transform hover:-translate-y-1 uppercase tracking-widest">
+                            Apply on TruckersMP
+                        </a>
+                        <p class="mt-4 text-xs text-gray-500">Application review time: approx 24 hours</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-[#0a0a0a] border-t border-gray-900 pt-16 pb-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <span class="font-display font-bold text-2xl tracking-wider text-white uppercase">AMETHYST <span class="text-amethyst-400">TRUCKING</span></span>
+                    <p class="text-gray-500 mt-4 max-w-sm">
+                        Driving the future of virtual logistics. Join us on the road and experience the difference of a professional VTC community.
+                    </p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="https://discord.gg/8gfKGMtAdF" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-amethyst-600 hover:text-white transition-colors" title="Discord">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                        <a href="https://truckersmp.com/vtc/86948" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-amethyst-600 hover:text-white transition-colors" title="TruckersMP Profile">
+                            <i class="fas fa-truck-moving"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase text-sm tracking-wider">Navigation</h4>
+                    <ul class="space-y-3">
+                        <li><button onclick="showPage('home')" class="text-gray-500 hover:text-amethyst-400 transition-colors">Home</button></li>
+                        <li><button onclick="showPage('about')" class="text-gray-500 hover:text-amethyst-400 transition-colors">About Us</button></li>
+                        <li><button onclick="showPage('join')" class="text-gray-500 hover:text-amethyst-400 transition-colors">Apply to VTC</button></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-900 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <img src="https://media.discordapp.net/attachments/1472977449078886450/1472978405090660473/AmethystTruckingNoBackground.png?ex=699926ca&is=6997d54a&hm=a5fd713bb89e544a4faad3730f8dca4befccc18b47b21cf23bde586e4fed0dd3&=&format=webp&quality=lossless" alt="Amethyst Logo" class="h-6 w-auto opacity-50 grayscale">
+                    <p class="text-gray-600 text-sm text-center md:text-left">
+                        &copy; 2026 Amethyst Trucking VTC. Not affiliated with SCS Software or TruckersMP.
+                    </p>
+                </div>
+                <p class="text-gray-700 text-xs mt-2 md:mt-0 flex items-center uppercase tracking-tighter">
+                    Built for the Community
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            document.getElementById(pageId).classList.add('active');
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('text-white');
+                link.classList.add('text-gray-300');
+                if(link.getAttribute('onclick').includes(pageId)) {
+                    link.classList.remove('text-gray-300');
+                    link.classList.add('text-white');
+                }
+            });
+
+            document.getElementById('mobile-menu').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if(pageId === 'home') {
+                animateCounters();
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200;
+
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                counter.innerText = '0';
+                const target = +counter.getAttribute('data-target');
+                const updateCount = () => {
+                    const count = +counter.innerText;
+                    const inc = target / speed;
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 20);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCount();
+            });
+        };
+
+        window.onload = animateCounters;
+    </script>
+</body>
+</html>
